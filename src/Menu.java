@@ -5,19 +5,19 @@ public class Menu {
 
     private final Scanner scanner = new Scanner(System.in).useDelimiter("\n");
     private final Converter converter = new Converter();
-    private String opcion;
+    private String option;
 
 //    private CommonInfo commonInfo;
 
-    public void menu1() {
-        imprimirSeparador(40);
+    public void principalMenu() {
+        printDivider(40);
         System.out.println("---- Bienvenido al Conversor de Monedas ----");
         System.out.println("Para continuar, por favor ingrese una clave API válida.");
         System.out.println("Presione 'x' para finalizar");
         do{
-            opcion = scanner.nextLine();
-            converter.validateApiKey(opcion.replaceAll("[^a-zA-Z0-9]", ""));
-            if(opcion.equalsIgnoreCase("x")){
+            option = scanner.nextLine();
+            converter.validateApiKey(option.replaceAll("[^a-zA-Z0-9]", ""));
+            if(option.equalsIgnoreCase("x")){
                 System.out.println("Finalizado programa");
             } else if (!converter.isApiKeyValid()){
                 System.out.print("Clave incorrecta. ");
@@ -25,19 +25,19 @@ public class Menu {
             }
 
 
-        } while (!opcion.equalsIgnoreCase("x") && !converter.isApiKeyValid());
+        } while (!option.equalsIgnoreCase("x") && !converter.isApiKeyValid());
 
-        System.out.println("y?");
-        if (!opcion.equalsIgnoreCase("x")) {
+        if (!option.equalsIgnoreCase("x")) {
             System.out.println("Clave correcta. Accediendo al menú");
-            menuFijos();
+            innerMenu();
         }
 
         System.out.println("Hasta luego.");
     }
-    public void menuFijos() {
-        this.imprimirSeparador(40);
-        opcion = "";
+
+    public void innerMenu() {
+        this.printDivider(40);
+        option = "";
         System.out.println("Sea bienvenido/a al Conversor de Moneda =]");
         do{
             System.out.println("""                
@@ -51,17 +51,17 @@ public class Menu {
                 8) Salir
                 Elija una opción válida:
                 """);
-            opcion = scanner.nextLine();
-            granSwitch(opcion);
-        } while (!opcion.equalsIgnoreCase("8"));
+            option = scanner.nextLine();
+            innerMenuSwitch(option);
+        } while (!option.equalsIgnoreCase("8"));
 
-        this.imprimirSeparador(40);
+        this.printDivider(40);
 
     }
 
-    public void menuConversionPersonalizada() {
-        this.imprimirSeparador(40);
-        opcion = "";
+    public void customConversionMenu() {
+        this.printDivider(40);
+        option = "";
         do{
             System.out.println("""
                 Conversión personalizada
@@ -72,66 +72,65 @@ public class Menu {
                 
                 Elija una opción válida:
                 """);
-            opcion = scanner.nextLine();
-            switchConversorPersonalizada(opcion);
-        } while (!opcion.equalsIgnoreCase("3"));
-        this.imprimirSeparador(40);
+            option = scanner.nextLine();
+            customConversionMenuSwitch(option);
+        } while (!option.equalsIgnoreCase("3"));
+        this.printDivider(40);
 
     }
 
-    private void imprimirSeparador(Integer cantidad) {
-        for (int i = 0; i < cantidad; i++) {
+    private void printDivider(Integer numberOfAsterisks) {
+        for (int i = 0; i < numberOfAsterisks; i++) {
             System.out.print("*");
         }
         System.out.println();
     }
 
-    public void granSwitch(String opcion) {
+    public void innerMenuSwitch(String option) {
         Double amountToConvert;
-        switch (opcion) {
+        switch (option) {
             case "1" -> {
                 System.out.println("Dólar =>> Peso argentino");
-                amountToConvert = AuxFunction.pedirMonto();
+                amountToConvert = AuxFunction.askAmount();
                 converter.convertFromTo("USD", "ARS", amountToConvert);
             }
             case "2" -> {
                 System.out.println("Peso argentino =>> Dólar");
-                amountToConvert = AuxFunction.pedirMonto();
+                amountToConvert = AuxFunction.askAmount();
                 converter.convertFromTo("ARS", "USD", amountToConvert);
             }
             case "3" -> {
                 System.out.println("Dólar =>> Real brasileño");
-                amountToConvert = AuxFunction.pedirMonto();
+                amountToConvert = AuxFunction.askAmount();
                 converter.convertFromTo("USD", "BRL", amountToConvert);
             }
             case "4" -> {
                 System.out.println("Real brasileño =>> Dólar");
-                amountToConvert = AuxFunction.pedirMonto();
+                amountToConvert = AuxFunction.askAmount();
                 converter.convertFromTo("BRL", "USD", amountToConvert);
             }
             case "5" -> {
                 System.out.println("Dólar =>> Peso colombiano");
-                amountToConvert = AuxFunction.pedirMonto();
-                converter.convertFromTo("USD", "COL", amountToConvert);
+                amountToConvert = AuxFunction.askAmount();
+                converter.convertFromTo("USD", "COP", amountToConvert);
             }
             case "6" -> {
                 System.out.println("Peso colombiano =>> Dólar");
-                amountToConvert = AuxFunction.pedirMonto();
-                converter.convertFromTo("COL", "USD", amountToConvert);
+                amountToConvert = AuxFunction.askAmount();
+                converter.convertFromTo("COP", "USD", amountToConvert);
             }
             case "7" -> {
                 System.out.println("Conversión personalizada");
-                menuConversionPersonalizada();
-                break;
+                customConversionMenu();
             }
             case "8" -> System.out.println("Saliendo de la aplicación");
             default -> System.out.println("Debe elegir una opción válida");
         }
     }
 
-    public void switchConversorPersonalizada(String opcion) {
-        switch (opcion) {
-            case "1" -> customCodes();
+    public void customConversionMenuSwitch(String option) {
+        switch (option) {
+            case "1" -> customConversion();
             case "2" -> {
                 System.out.println("Códigos aceptados");
                 converter.showCodes();
@@ -139,12 +138,13 @@ public class Menu {
             default -> System.out.println("Debe ingresar una opción válida");
         }
     }
-    public void customCodes() {
+
+    public void customConversion() {
         Set<String> codes = converter.returnCodes();
 
-        String codeFrom = AuxFunction.pedirCodigo(codes);
-        String codeTo = AuxFunction.pedirCodigo(codes, codeFrom);
-        Double amountToConvert = AuxFunction.pedirMonto();
+        String codeFrom = AuxFunction.askCode(codes);
+        String codeTo = AuxFunction.askCode(codes, codeFrom);
+        Double amountToConvert = AuxFunction.askAmount();
 
         converter.convertFromTo(codeFrom, codeTo, amountToConvert);
 

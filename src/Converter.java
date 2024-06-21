@@ -19,6 +19,10 @@ public class Converter {
         this.gson = new Gson();
     }
 
+    public Boolean isApiKeyValid() {
+        return this.validApiKey;
+    }
+
     public void validateApiKey(String apikey) {
         JsonObject jsonObject = apiComm.requestData(apikey);
         String result = jsonObject.get("result").getAsString();
@@ -37,13 +41,11 @@ public class Converter {
     public void convertFromTo(String codeFrom, String codeTo, Double amount) {
         Double conversionRate = retrieveConversionRate(codeFrom, codeTo);
         double total = amount * conversionRate;
-        System.out.println("1 " + codeFrom + " --> " + conversionRate.toString() + " " + codeTo);
-        System.out.println("El resultado de la conversión es: " + amount + " " + codeFrom + " equals " + total + " " + codeTo);
-
-    }
-
-    public Boolean isApiKeyValid() {
-        return this.validApiKey;
+        System.out.println();
+        System.out.println("Resultados de la conversión: ");
+        System.out.println("El valor actual del cambio entre monedas es:\n1 " + codeFrom + " --> " + conversionRate + " " + codeTo);
+        System.out.println(amount + " " + codeFrom + " equivalen a  " + total + " " + codeTo);
+        System.out.println();
     }
 
     public Set<String> returnCodes() {
@@ -52,6 +54,7 @@ public class Converter {
         }
         return null;
     }
+
 
     public void showCodes() {
         Set<String> codes = returnCodes();

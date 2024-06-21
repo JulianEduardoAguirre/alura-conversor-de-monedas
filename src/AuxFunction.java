@@ -4,6 +4,7 @@ import java.util.Set;
 public class AuxFunction {
 
     private static final Scanner scanner = new Scanner(System.in).useDelimiter("\n");
+
     public static Boolean validateCode(String code, Set<String> codes) {
         return codes.contains(code);
     }
@@ -25,7 +26,7 @@ public class AuxFunction {
         }
     }
 
-    public static Double pedirMonto() {
+    public static Double askAmount() {
         String amountString;
         do {
             System.out.println("Ingrese la cantidad a convertir: ");
@@ -34,23 +35,23 @@ public class AuxFunction {
         return Double.parseDouble(amountString);
     }
 
-    public static String pedirCodigo(Set<String> codes) {
+    public static String askCode(Set<String> codes) {
         String code;
         boolean flag;
         do {
             System.out.println("Ingrese el código de la moneda base: ");
-            code = scanner.next();
+            code = scanner.next().toUpperCase();
             flag = validateCode(code, codes);
         } while(!flag);
         return code;
     }
 
-    public static String pedirCodigo(Set<String> codes, String previousCode) {
+    public static String askCode(Set<String> codes, String previousCode) {
         String code;
         boolean flag;
         do {
             System.out.println("Ingrese el código de la moneda objetivo: ");
-            code = scanner.next();
+            code = scanner.next().toUpperCase();
             flag = validateCode(code, previousCode, codes);
         } while(!flag);
         return code;
