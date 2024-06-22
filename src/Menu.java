@@ -13,6 +13,7 @@ public class Menu {
         printDivider(40);
         System.out.println("---- Bienvenido al Conversor de Monedas ----");
         System.out.println("Para continuar, por favor ingrese una clave API válida.");
+        System.out.println("https://www.exchangerate-api.com/");
         System.out.println("Presione 'x' para finalizar");
         do{
             option = scanner.nextLine();
@@ -21,7 +22,8 @@ public class Menu {
                 System.out.println("Finalizado programa");
             } else if (!converter.isApiKeyValid()){
                 System.out.print("Clave incorrecta. ");
-                System.out.println("Ingrese nuevamente una clave API o presiona 'x' para finalizar");
+                System.out.println("Ingrese nuevamente una clave API o genere una en https://www.exchangerate-api.com/");
+                System.out.println("presiona 'x' para finalizar\"");
             }
 
 
