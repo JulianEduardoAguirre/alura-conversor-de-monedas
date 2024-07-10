@@ -1,11 +1,20 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
 public class Menu {
 
-    private final Scanner scanner = new Scanner(System.in).useDelimiter("\n");
-    private final Converter converter = new Converter();
+    private final Scanner scanner;// = new Scanner(System.in).useDelimiter("\n");
+    private final Converter converter;// = new Converter();
     private String option;
+    private List<Transaction> transactions;
+
+    public Menu() {
+        scanner = new Scanner(System.in).useDelimiter("\n");
+        converter = new Converter();
+        transactions = new ArrayList<Transaction>();
+    }
 
 //    private CommonInfo commonInfo;
 
@@ -95,38 +104,61 @@ public class Menu {
                 System.out.println("Dólar =>> Peso argentino");
                 amountToConvert = AuxFunction.askAmount();
                 converter.convertFromTo("USD", "ARS", amountToConvert);
+                Transaction t = new Transaction("USD", "ARS", amountToConvert);
+                transactions.add(t);
             }
             case "2" -> {
                 System.out.println("Peso argentino =>> Dólar");
                 amountToConvert = AuxFunction.askAmount();
                 converter.convertFromTo("ARS", "USD", amountToConvert);
+                Transaction t = new Transaction("ARS", "USD", amountToConvert);
+                transactions.add(t);
             }
             case "3" -> {
                 System.out.println("Dólar =>> Real brasileño");
                 amountToConvert = AuxFunction.askAmount();
                 converter.convertFromTo("USD", "BRL", amountToConvert);
+                Transaction t = new Transaction("USD", "BRL", amountToConvert);
+                transactions.add(t);
             }
             case "4" -> {
                 System.out.println("Real brasileño =>> Dólar");
                 amountToConvert = AuxFunction.askAmount();
                 converter.convertFromTo("BRL", "USD", amountToConvert);
+                Transaction t = new Transaction("BRL", "USD", amountToConvert);
+                transactions.add(t);
             }
             case "5" -> {
                 System.out.println("Dólar =>> Peso colombiano");
                 amountToConvert = AuxFunction.askAmount();
                 converter.convertFromTo("USD", "COP", amountToConvert);
+                Transaction t = new Transaction("USD", "COP", amountToConvert);
+                transactions.add(t);
             }
             case "6" -> {
                 System.out.println("Peso colombiano =>> Dólar");
                 amountToConvert = AuxFunction.askAmount();
                 converter.convertFromTo("COP", "USD", amountToConvert);
+                Transaction t = new Transaction("COP", "USD", amountToConvert);
+                transactions.add(t);
             }
             case "7" -> {
                 System.out.println("Conversión personalizada");
                 customConversionMenu();
             }
-            case "8" -> System.out.println("Saliendo de la aplicación");
+            case "8" -> {
+                showTransactionHistory();
+            }
+            case "9" -> System.out.println("Saliendo de la aplicación");
             default -> System.out.println("Debe elegir una opción válida");
+        }
+    }
+
+    private void showTransactionHistory() {
+        if (transactions.isEmpty()) {
+            System.out.println("Not transactions have been made yet.");
+        } else {
+            transactions.forEach(System.out::println);
         }
     }
 
@@ -149,6 +181,8 @@ public class Menu {
         Double amountToConvert = AuxFunction.askAmount();
 
         converter.convertFromTo(codeFrom, codeTo, amountToConvert);
+        Transaction transaction = new Transaction(codeFrom, codeTo, amountToConvert);
+        transactions.add(transaction);
 
     }
 
