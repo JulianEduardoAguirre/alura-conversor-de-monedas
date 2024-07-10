@@ -42,7 +42,7 @@ public class Converter {
         Double conversionRate = retrieveConversionRate(codeFrom, codeTo);
         double total = amount * conversionRate;
         System.out.println();
-        System.out.println("Resultados de la conversión: ");
+//        System.out.println("Resultados de la conversión: ");
         System.out.println("El valor actual del cambio entre monedas es:\n1 " + codeFrom + " --> " + conversionRate + " " + codeTo);
         System.out.println(amount + " " + codeFrom + " equivalen a  " + total + " " + codeTo);
         System.out.println();

@@ -11,7 +11,7 @@ public class AuxFunction {
 
     public static Boolean validateCode(String code, String previousCode, Set<String> codes) {
         if ( code.equals(previousCode)) {
-            System.out.println("Código repetido. Por favor, ingresa otro código válido.");
+            System.out.println("Código repetido. Por favor, ingresa otro código válido.\n");
             return false;
         }
         return codes.contains(code);
@@ -29,7 +29,7 @@ public class AuxFunction {
     public static Double askAmount() {
         String amountString;
         do {
-            System.out.println("Ingrese la cantidad a convertir: ");
+            System.out.print("Ingrese la cantidad a convertir: ");
             amountString = scanner.next();
         } while (!IsInteger(amountString));
         return Double.parseDouble(amountString);
@@ -39,7 +39,7 @@ public class AuxFunction {
         String code;
         boolean flag;
         do {
-            System.out.println("Ingrese el código de la moneda base: ");
+            System.out.print("Ingrese el código de la moneda base: ");
             code = scanner.next().toUpperCase();
             flag = validateCode(code, codes);
         } while(!flag);
@@ -50,7 +50,7 @@ public class AuxFunction {
         String code;
         boolean flag;
         do {
-            System.out.println("Ingrese el código de la moneda objetivo: ");
+            System.out.print("Ingrese el código de la moneda objetivo: ");
             code = scanner.next().toUpperCase();
             flag = validateCode(code, previousCode, codes);
         } while(!flag);

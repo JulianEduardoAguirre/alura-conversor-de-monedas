@@ -5,24 +5,23 @@ import java.util.Set;
 
 public class Menu {
 
-    private final Scanner scanner;// = new Scanner(System.in).useDelimiter("\n");
-    private final Converter converter;// = new Converter();
+    private final Scanner scanner;
+    private final Converter converter;
     private String option;
-    private List<Transaction> transactions;
+    private final List<Transaction> transactions;
 
     public Menu() {
         scanner = new Scanner(System.in).useDelimiter("\n");
         converter = new Converter();
-        transactions = new ArrayList<Transaction>();
+        transactions = new ArrayList<>();
     }
 
-//    private CommonInfo commonInfo;
 
     public void principalMenu() {
         printDivider(40);
-        System.out.println("---- Bienvenido al Conversor de Monedas ----");
+        System.out.println("---- Bienvenido al Conversor de Monedas ----\n");
         System.out.println("Para continuar, por favor ingrese una clave API válida.");
-        System.out.println("https://www.exchangerate-api.com/");
+        System.out.println("(https://www.exchangerate-api.com/)\n");
         System.out.println("Presione 'x' para finalizar");
         do{
             option = scanner.nextLine();
@@ -31,15 +30,15 @@ public class Menu {
                 System.out.println("Finalizado programa");
             } else if (!converter.isApiKeyValid()){
                 System.out.print("Clave incorrecta. ");
-                System.out.println("Ingrese nuevamente una clave API o genere una en https://www.exchangerate-api.com/");
-                System.out.println("presiona 'x' para finalizar\"");
+                System.out.println("Ingrese nuevamente una clave API o genere una en https://www.exchangerate-api.com/\n");
+                System.out.println("presiona 'x' para finalizar");
             }
 
 
         } while (!option.equalsIgnoreCase("x") && !converter.isApiKeyValid());
 
         if (!option.equalsIgnoreCase("x")) {
-            System.out.println("Clave correcta. Accediendo al menú");
+            System.out.println("Clave correcta. Accediendo al menú\n");
             innerMenu();
         }
 
@@ -51,7 +50,8 @@ public class Menu {
         option = "";
         System.out.println("Sea bienvenido/a al Conversor de Moneda =]");
         do{
-            System.out.println("""                
+            System.out.println("""  
+                              
                 1) Dólar =>> Peso argentino
                 2) Peso argentino =>> Dólar
                 3) Dólar =>> Real brasileño
@@ -59,12 +59,14 @@ public class Menu {
                 5) Dólar =>> Peso colombiano
                 6) Peso colombiano =>> Dólar
                 7) Conversión personalizada
-                8) Salir
+                8) Mostrar historial de transacciones
+                9) Salir
+                
                 Elija una opción válida:
                 """);
             option = scanner.nextLine();
             innerMenuSwitch(option);
-        } while (!option.equalsIgnoreCase("8"));
+        } while (!option.equalsIgnoreCase("9"));
 
         this.printDivider(40);
 
@@ -156,7 +158,7 @@ public class Menu {
 
     private void showTransactionHistory() {
         if (transactions.isEmpty()) {
-            System.out.println("Not transactions have been made yet.");
+            System.out.println("@@@@@@   Aún no se realizaron transacciones   @@@@@@\n");
         } else {
             transactions.forEach(System.out::println);
         }
