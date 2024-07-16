@@ -16,7 +16,6 @@ public class Menu {
         transactions = new ArrayList<>();
     }
 
-
     public void principalMenu() {
         printDivider(40);
         System.out.println("---- Bienvenido al Conversor de Monedas ----\n");
